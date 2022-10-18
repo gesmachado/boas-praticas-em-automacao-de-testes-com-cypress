@@ -21,12 +21,11 @@ describe('Unnecessary waiting bad practice', () => {
       .type(info.description)
     cy.get('input[type="submit"]')
       .click()
-    cy.wait(3000)
 
     cy.url()
       .should(
         'be.equal',
-        `https://lit-chamber-61567.herokuapp.com/destinations/${randomDestination}`
+        `https://lit-chamber-61567.herokuapp.com/destinations/${randomDestination}`, {timeout: 10000}
       )
     cy.contains('h2', info.name)
       .should('be.visible')

@@ -1,5 +1,5 @@
 const faker = require('faker')
-const editDestinationPage = require('../../page-objects/editDestination')
+const editDestinationPage = require('../../page-objects/editDestination') // Só precisa se usar page object
 
 describe('Page Object bad practice', () => {
   const randomDestination = Math.floor(Math.random() * 15) + 1
@@ -14,7 +14,12 @@ describe('Page Object bad practice', () => {
       description: faker.random.words(5)
     }
 
-    editDestinationPage.updateInfo(info)
+    // Se usar page object
+    //editDestinationPage.updateInfo(info)
+    //editDestinationPage.updateInfo_2(info)
+  
+    //Se usar commands
+    cy.updateDestination(info)  // só funciona na pasta support e jno arquivo commands.js
 
     cy.url()
       .should(

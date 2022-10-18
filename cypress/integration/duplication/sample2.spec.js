@@ -7,17 +7,25 @@ describe('Code duplication bad practice - Sample 2', () => {
 
     cy.visit('https://hackernews-seven.vercel.app')
     cy.wait('@getStories')
-
-    cy.get('input[type="text"]')
-      .should('be.visible')
-      .and('have.value', 'redux')
-      .as('searchField')
-      .clear()
   })
 
+  // Forma 1 - Com reuso
+  const terms = ['reactjs', 'viewjs']
+  terms.forEach(term => {
+    it('searches for ${term}', () => {
+      cy.search(term)
+  
+      cy.wait('@getStories')
+  
+      cy.get('.table-row')
+        .should('have.length', 100)
+    })
+  })
+
+  // Forma 2 - sem iteração e reuso
+
   it('searches for "reactjs"', () => {
-    cy.get('@searchField')
-      .type('reactjs{enter}')
+    cy.search('reactjs')
 
     cy.wait('@getStories')
 
@@ -26,8 +34,7 @@ describe('Code duplication bad practice - Sample 2', () => {
   })
 
   it('searches for "vuejs"', () => {
-    cy.get('@searchField')
-      .type('vuejs{enter}')
+    cy.search('vuejs')
 
     cy.wait('@getStories')
 
